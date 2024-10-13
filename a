@@ -1,0 +1,29 @@
+test sdada
+import csv
+import json
+
+def csv_to_json(csv_file, json_file):
+    data = []
+    
+    # Otwieramy plik CSV i wczytujemy dane
+    with open(csv_file, mode='r', encoding='utf-8') as file:
+        csv_reader = csv.reader(file)
+        
+        # Pobieramy nagłówki (pierwsza linia CSV)
+        headers = next(csv_reader)
+        
+        # Iterujemy przez każdą linię CSV i tworzymy słownik dla każdego wiersza
+        for row in csv_reader:
+            # Tworzymy słownik na podstawie nagłówków i danych w wierszu
+            row_dict = {headers[i]: row[i] for i in range(len(headers))}
+            data.append(row_dict)
+    
+    # Zapisujemy dane do pliku JSON
+    with open(json_file, mode='w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4)
+
+# Przykład użycia
+csv_file = 'input.csv'  # Ścieżka do pliku CSV
+json_file = 'output.json'  # Ścieżka do zapisu pliku JSON
+
+csv_to_json(csv_file, json_file)
