@@ -1,22 +1,26 @@
 test sdada
 import csv
 import json
+import ast
 
-def csv_to_json(csv_file, json_file):
+def csv_to_json_custom(csv_file, json_file):
     data = []
     
     # Otwieramy plik CSV i wczytujemy dane
     with open(csv_file, mode='r', encoding='utf-8') as file:
         csv_reader = csv.reader(file)
         
-        # Pobieramy nagłówki (pierwsza linia CSV)
-        headers = next(csv_reader)
-        
-        # Iterujemy przez każdą linię CSV i tworzymy słownik dla każdego wiersza
+        # Iterujemy przez każdą linię CSV
         for row in csv_reader:
-            # Tworzymy słownik na podstawie nagłówków i danych w wierszu
-            row_dict = {headers[i]: row[i] for i in range(len(headers))}
-            data.append(row_dict)
+            if len(row) > 0:
+                # Podział na dwie części: data_hash i lista dat
+                date_hash, date_list_str = row[0].split(' ', 1)
+                
+                # Konwersja tekstowej listy do rzeczywistej listy Pythona
+                date_list = ast.literal_eval(date_list_str)
+                
+                # Dodajemy obiekt do listy, gdzie klucz to data_hash, a wartość to lista dat
+                data.append({date_hash: date_list})
     
     # Zapisujemy dane do pliku JSON
     with open(json_file, mode='w', encoding='utf-8') as file:
@@ -26,4 +30,5 @@ def csv_to_json(csv_file, json_file):
 csv_file = 'input.csv'  # Ścieżka do pliku CSV
 json_file = 'output.json'  # Ścieżka do zapisu pliku JSON
 
-csv_to_json(csv_file, json_file)
+csv_to_json_custom(csv_file, json_file)
+
