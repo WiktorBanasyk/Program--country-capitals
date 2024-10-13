@@ -1,7 +1,5 @@
-test sdada
 import csv
 import json
-import ast
 
 def csv_to_json_custom(csv_file, json_file):
     data = []
@@ -16,8 +14,11 @@ def csv_to_json_custom(csv_file, json_file):
                 # Podział na dwie części: data_hash i lista dat
                 date_hash, date_list_str = row[0].split(' ', 1)
                 
-                # Konwersja tekstowej listy do rzeczywistej listy Pythona
-                date_list = ast.literal_eval(date_list_str)
+                # Usuwamy niepotrzebne znaki z listy, takie jak nawiasy kwadratowe i cudzysłowy
+                date_list_str = date_list_str.strip("[]").replace("'", "").replace('"', '')
+                
+                # Tworzymy listę z poszczególnych dat
+                date_list = [date.strip() for date in date_list_str.split(',')]
                 
                 # Dodajemy obiekt do listy, gdzie klucz to data_hash, a wartość to lista dat
                 data.append({date_hash: date_list})
@@ -31,4 +32,3 @@ csv_file = 'input.csv'  # Ścieżka do pliku CSV
 json_file = 'output.json'  # Ścieżka do zapisu pliku JSON
 
 csv_to_json_custom(csv_file, json_file)
-
