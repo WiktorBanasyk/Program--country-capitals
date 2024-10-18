@@ -29,3 +29,28 @@ with open(output_file_path, 'w') as output_file:
     json.dump(new_json, output_file, indent=4)
 
 print(f'Sukces: Utworzono plik JSON z {len(new_data)} elementami.')
+==========
+import json
+
+# Ścieżka do pliku JSON wejściowego
+input_file_path = 'path/to/your/input_file.json'  # Zmień na rzeczywistą ścieżkę
+
+# Wczytaj dane z pliku JSON
+with open(input_file_path, 'r') as input_file:
+    json_data = json.load(input_file)
+
+# Iteruj po elementach w tablicy 'data'
+for item in json_data['data']:
+    # Wypisz wszystkie klucze i wartości elementu
+    print("Element:")
+    for key, value in item.items():
+        print(f"{key}: {value}")
+
+    # Sprawdź, czy w 'CERT_NAME' jest fraza 'slp' lub 'swp'
+    cert_name = item['CERT_NAME'].strip().lower()
+    if 'slp' in cert_name or 'swp' in cert_name:
+        print("\n---> Ten element zawiera 'slp' lub 'swp' w 'CERT_NAME':")
+        for key, value in item.items():
+            print(f"{key}: {value}")
+    print("-" * 30)  # Dodanie separatora dla czytelności
+
