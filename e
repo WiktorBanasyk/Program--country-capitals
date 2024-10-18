@@ -32,12 +32,16 @@ print(f'Sukces: Utworzono plik JSON z {len(new_data)} elementami.')
 ==========
 import json
 
-# Ścieżka do pliku JSON wejściowego
+# Ścieżka do pliku JSON wejściowego i wyjściowego
 input_file_path = 'path/to/your/input_file.json'  # Zmień na rzeczywistą ścieżkę
+output_file_path = 'serwery.json'  # Plik wynikowy, gdzie zapiszemy dane
 
 # Wczytaj dane z pliku JSON
 with open(input_file_path, 'r') as input_file:
     json_data = json.load(input_file)
+
+# Lista na elementy zawierające 'slp' lub 'swp' w 'CERT_NAME'
+filtered_data = []
 
 # Iteruj po elementach w tablicy 'data'
 for item in json_data['data']:
@@ -52,5 +56,12 @@ for item in json_data['data']:
         print("\n---> Ten element zawiera 'slp' lub 'swp' w 'CERT_NAME':")
         for key, value in item.items():
             print(f"{key}: {value}")
+        # Dodaj ten element do listy wynikowej
+        filtered_data.append(item)
     print("-" * 30)  # Dodanie separatora dla czytelności
 
+# Zapisz wyfiltrowane elementy do nowego pliku JSON
+with open(output_file_path, 'w') as output_file:
+    json.dump({"data": filtered_data}, output_file, indent=4)
+
+print(f'Sukces: Utworzono plik {output_file_path} zawierający {len(filtered_data)} elementy.')
