@@ -2,3 +2,5 @@ sed -n '1h;1!H;${g;s/.*"certificates":\s*\[\([^]]*\)\].*/\1/;s/"EXPIRE":\s*"\([^
 jq -r '{
     data: [.certificates[] | {"{#CERT_EXPIRE}": .EXPIRE}]
 }' test.json > output.json
+
+jq -r '{ data: [.certificates[] | {"{#CERT_EXPIRE}": .EXPIRE}] }' test.json > output.json
