@@ -3,4 +3,4 @@ jq -r '{
     data: [.certificates[] | {"{#CERT_EXPIRE}": .EXPIRE}]
 }' test.json > output.json
 
-jq -r '{ data: [.certificates[] | {"{#CERT_EXPIRE}": .EXPIRE}] }' test.json > output.json
+jq -r '{ data: [.certificates[] | {"{#CERT_EXPIRE}": .EXPIRE}] }' test2.json > test3.json # przeksztalcenie kluczy na {#CERT_EXPIRE}
